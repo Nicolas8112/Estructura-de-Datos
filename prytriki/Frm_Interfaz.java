@@ -1,0 +1,383 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
+package prytriki;
+
+import java.awt.Color; //color de las x y O
+import javax.swing.JLabel; //libreria de Jlabel
+import javax.swing.JOptionPane;//ventana emergente
+
+/**
+ *
+ * @author PC
+ */
+public class Frm_Interfaz extends javax.swing.JFrame {
+    
+    int turno, contadorX, contadorO;//turno(quien juega), y los contadores de jugadas
+    boolean fin = false;//para saber cuando termino el juego
+    public JLabel[][] matriz;//matriz para guardar el label
+    public Color colorx = Color.red; //color de las X
+    public Color colorO = Color.blue; //color de las O
+
+    /**
+     * Creates new form Frm_Interfaz
+     */
+    public Frm_Interfaz() {
+        initComponents();
+        turno = contadorO = contadorX = 1; //inicializa todas las variables en 1
+        matriz = new JLabel[][]{{A1,B1,C1}, {A2,B2,C2}, {A3,B3,C3}};//Almacena Jlabel en el arreglo
+    }
+    
+    //Creamos metodo CLici para ejecutar el programa
+
+public void CLic(JLabel cuadro) {
+    boolean reinicio = false; //indica si se reinicia el juego
+    if (!fin) {  //verifica si aun el juego esta corriendo
+        if (cuadro.getText().equals("")) {  //comprueba que el label este libre
+            if (turno % 2 == 1) { //verifica el turno para asignar letra
+                cuadro.setText("X"); //colocamos la letra X en el label
+                cuadro.setForeground(colorx); //le damos color a la letra x
+                if (contadorX >=3) {  //comprobamos que por lo menos hallan 3 X
+                    verificar("X");  //verificamos si la X gano
+                }
+                contadorX++;  //Aumentamos en uno
+            } else {
+                cuadro.setText("O"); //Colocamos la letra en el JLabel
+                cuadro.setForeground(colorO);//le damos color a la O
+                if (contadorO >=3) { //comprobamos que halla 3 O
+                    verificar("O"); //Verificar si la O gano
+                }
+                contadorO++;  //Aumentamos en uno el contador de la O
+            }
+            turno++; //Aumentamos en uno el contador del turno 
+        }
+    }
+    if (turno >9) {
+        if (JOptionPane.showConfirmDialog(null, "¿Desea iniciar un nuevo juego?") ==0) {
+            nuevo();         //reinicia el juego
+            reinicio = true; //indica que el juegp se reinicio
+        } else {
+                    fin=false;
+ 
+                }
+            }
+        } 
+
+//Creamos la clase verifiar que es la encargada de decirnos cuando halla triki
+
+public void verificar(String letra) {
+int contador = 0;
+int a, b;
+boolean reinicio = false; //indica si se reinicio el juego
+for (int x = 0; x < 2; x++) {
+   for (int i = 0; i < matriz.length; i++) {
+       for (int j = 0; j < matriz.length; j++) {
+            if (x == 0) {
+                a = i; //posicion fila
+                b = j;  //posicion columna
+            } else {
+                a = j; //posicion de fila
+                b = i; //posicion de columna
+            }
+            if (matriz[a][b].getText().equals(letra)) {
+                contador++;  // cuenta las X o O en la matriz
+                
+            }
+       }
+       if (!fin && contador == 3) {
+           JOptionPane.showMessageDialog(null,"Triky");
+           if (JOptionPane.showConfirmDialog(null, "¿Desea iniciar un nuevo juego?") ==0) {
+               nuevo ();  //reinicia el juego
+               reinicio = true; //indica que el juego se reinicia 
+           } else {
+               fin = false;
+           }
+           break;
+       }
+       contador = 0;
+   }
+}
+if (!reinicio) {
+    int pos;
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < matriz.length; j++) {
+            if (i == 0){
+                pos = j;
+            } else {
+                pos = 2 - j;
+            }
+            if (matriz[j][pos].getText().equals(letra)) {
+                contador++;
+            }
+        }
+        if (contador == 3) {
+            JOptionPane.showMessageDialog(null, "Triky");
+            if (JOptionPane.showConfirmDialog(null, "¿Desea iniciar un nuevo juego?") == 0) {
+                nuevo();
+                break;
+            } else {
+                fin = false;
+                break;
+            }
+        }
+        contador = 0;
+    }
+}
+}
+
+//Inicia un nuevo juego, dejando el tablero vacio
+
+public void nuevo() { 
+    fin = false;
+    contadorO = contadorX = 1;
+    turno = 0;
+    Color colorX = Color.red;
+    Color colorO = Color.blue;
+    for (int i = 0; i < matriz.length; i++) {
+        for (int j = 0; j < matriz.length; j++) {
+            matriz[i][j].setText("");
+        }
+    }
+}
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        A1 = new javax.swing.JLabel();
+        A2 = new javax.swing.JLabel();
+        A3 = new javax.swing.JLabel();
+        B1 = new javax.swing.JLabel();
+        B2 = new javax.swing.JLabel();
+        B3 = new javax.swing.JLabel();
+        C1 = new javax.swing.JLabel();
+        C2 = new javax.swing.JLabel();
+        C3 = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new java.awt.GridLayout(3, 3));
+
+        A1.setBackground(new java.awt.Color(0, 0, 0));
+        A1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        A1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A1.setToolTipText("");
+        A1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        A1.setOpaque(true);
+        A1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                A1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(A1);
+
+        A2.setBackground(new java.awt.Color(0, 0, 0));
+        A2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        A2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A2.setToolTipText("");
+        A2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        A2.setOpaque(true);
+        A2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                A2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(A2);
+
+        A3.setBackground(new java.awt.Color(0, 0, 0));
+        A3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        A3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        A3.setToolTipText("");
+        A3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        A3.setOpaque(true);
+        A3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                A3MouseClicked(evt);
+            }
+        });
+        jPanel1.add(A3);
+
+        B1.setBackground(new java.awt.Color(0, 0, 0));
+        B1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        B1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B1.setToolTipText("");
+        B1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        B1.setOpaque(true);
+        B1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(B1);
+
+        B2.setBackground(new java.awt.Color(0, 0, 0));
+        B2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        B2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B2.setToolTipText("");
+        B2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        B2.setOpaque(true);
+        B2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(B2);
+
+        B3.setBackground(new java.awt.Color(0, 0, 0));
+        B3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        B3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        B3.setToolTipText("");
+        B3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        B3.setOpaque(true);
+        B3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                B3MouseClicked(evt);
+            }
+        });
+        jPanel1.add(B3);
+
+        C1.setBackground(new java.awt.Color(0, 0, 0));
+        C1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        C1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C1.setToolTipText("");
+        C1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        C1.setOpaque(true);
+        C1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                C1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(C1);
+
+        C2.setBackground(new java.awt.Color(0, 0, 0));
+        C2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        C2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C2.setToolTipText("");
+        C2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        C2.setOpaque(true);
+        C2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                C2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(C2);
+
+        C3.setBackground(new java.awt.Color(0, 0, 0));
+        C3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        C3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        C3.setToolTipText("");
+        C3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 153, 0), 2));
+        C3.setOpaque(true);
+        C3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                C3MouseClicked(evt);
+            }
+        });
+        jPanel1.add(C3);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void A1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_A1MouseClicked
+        CLic(A1);
+    }//GEN-LAST:event_A1MouseClicked
+
+    private void A2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_A2MouseClicked
+        CLic(A2);
+    }//GEN-LAST:event_A2MouseClicked
+
+    private void A3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_A3MouseClicked
+        CLic(A3);
+    }//GEN-LAST:event_A3MouseClicked
+
+    private void B1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B1MouseClicked
+        CLic(B1);
+    }//GEN-LAST:event_B1MouseClicked
+
+    private void B2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B2MouseClicked
+        CLic(B2);
+    }//GEN-LAST:event_B2MouseClicked
+
+    private void B3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_B3MouseClicked
+        CLic(B3);
+    }//GEN-LAST:event_B3MouseClicked
+
+    private void C1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_C1MouseClicked
+        CLic(C1);
+    }//GEN-LAST:event_C1MouseClicked
+
+    private void C2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_C2MouseClicked
+        CLic(C2);
+    }//GEN-LAST:event_C2MouseClicked
+
+    private void C3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_C3MouseClicked
+        CLic(C3);
+    }//GEN-LAST:event_C3MouseClicked
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(Frm_Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(Frm_Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(Frm_Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(Frm_Interfaz.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new Frm_Interfaz().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel A1;
+    private javax.swing.JLabel A2;
+    private javax.swing.JLabel A3;
+    private javax.swing.JLabel B1;
+    private javax.swing.JLabel B2;
+    private javax.swing.JLabel B3;
+    private javax.swing.JLabel C1;
+    private javax.swing.JLabel C2;
+    private javax.swing.JLabel C3;
+    private javax.swing.JPanel jPanel1;
+    // End of variables declaration//GEN-END:variables
+}
+ 
